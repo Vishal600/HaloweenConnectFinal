@@ -1,0 +1,56 @@
+<div class="text-center">
+    <h2 *ngIf="game.isPlayerOne()" style="font-variant:small-caps">Player- 1</h2>
+    <!--Defined in gameservice.-->
+    <h2 *ngIf="game.isPlayerTwo()" style="font-variant:small-caps">Player- 2</h2>
+  </div>
+
+
+  <div class="row scores-row">
+    <div class="games">
+      Game Round: {{noOfGames}} / {{totalGames}}
+    </div>
+    <div class="scores">
+        <div class="col player1">Player-1  : {{playerOne.score}} Win(s)</div>
+        <div class="col player2">Player-2 : {{playerTwo.score}} Win(s)</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="container">
+      <div *ngIf="showWinner" class="row winner-row">
+          <p style="font-variant: small-caps; font-family:'Franklin Gothic Medium', 'Arial Narrow',
+          Arial, sans-serif; font-variant: small-caps; font-size: 25px; font-weight: bolder;  background-color:rgb(0, 0, 0); border-color:rgb(0, 0, 0); color: rgb(255, 115, 0); margin-top: 5%;">That was easy for Player-{{showWinner}} !</p>
+
+
+          <button type="button" class="btn btn-default" style="font-family:'Franklin Gothic Medium', 'Arial Narrow',
+          Arial, sans-serif; font-variant: small-caps; font-size: 20px; font-weight: bolder;  background-color:rgb(255, 115, 0); border-color:rgb(0, 0, 0); color: rgb(0, 0, 0);  width: 42%;
+          margin-left:30%; margin-top: 10%; " (click)="playAgain()"><i class="glyphicon glyphicon-tower"></i>
+            Play again</button>
+      </div>
+
+      <div *ngIf="showWinner === 0">
+        <div class="row selection-row">
+          <div (mouseover)="show(i)" (click)="add(i)" class="selection-case" *ngFor="let piece of pieces; let i = index">
+            <div *ngIf="piece.visible" class="circle" [ngClass]="{'red': game.isPlayerOne(), 'yellow': game.isPlayerTwo()}"></div>
+          </div>
+        </div>
+
+        <div class="row custom-row" *ngFor="let row of game.grid">
+          <div class="case" (mouseover)="show(i)" (click)="add(i)" *ngFor="let case of row; let i = index">
+            <div class="circle" [ngClass]="{'white': case.isEmpty(), 'red': case.isRed(), 'yellow': case.isYellow()}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="winner === 0" style=" margin-bottom: 2%; margin-top:4%;">
+        <button (click)="restart()" class="btn btn-default" style="font-family:'Franklin Gothic Medium', 'Arial Narrow',
+     Arial, sans-serif; font-variant: small-caps; font-size: 15px; font-weight: bolder; margin-left:47%;
+      background-color:rgb(255, 115, 0); border-color:rgb(255, 115, 0); color: black;  width: 15%;
+      margin-left: 43%;  ">
+          <span class="glyphicon glyphicon-fire"></span>
+          Restart Game
+        </button>
+    </div>
+  </div>
+
+
